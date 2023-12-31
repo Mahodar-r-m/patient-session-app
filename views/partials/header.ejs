@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        
+      .frame {
+        position: fixed; /* Set the header to a fixed position */
+        top: 0; /* Place it at the top of the viewport */
+        width: 100%; /* Occupy full width */
+        display: flex;
+        flex-direction: row; /* Change to row for horizontal alignment */
+        align-items: center; /* Align items vertically */
+        justify-content: space-between; /* Distribute items evenly */
+        padding: 12px; /* Adjust padding */
+        background-color: rgba(255, 255, 255, 1);
+        border-radius: 0px 0px 12px 12px;
+        background: linear-gradient(
+          180deg,
+          rgb(176, 164, 245) 0%,
+          rgb(237, 161, 151) 100%
+        );
+        
+      }
+
+      .frame .group {
+        display: flex; /* Adjust flex settings */
+        align-items: center; /* Align items vertically */
+        justify-content: space-between; /* Distribute items evenly */
+        /* gap: 16px; Adjust gap between elements */
+        width: 100%;
+      }
+
+      .frame .noun-menu {
+        width: 24px;
+        height: 24px;
+        opacity: 0;
+      }
+
+      .frame .div {
+        width: 68px;
+        height: 60px;
+        background-image: url(./images/healthcare-logo.png);
+        background-size: 100% 100%;
+        
+      }
+
+      .frame .div-2 {
+        display: flex;
+        align-items: center; /* Align items vertically */
+        gap: 16px;
+      }
+
+      .frame .search-tools {
+        width: 24px;
+        height: 24px;
+      }
+
+      .frame .rectangle {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+      }
+
+      /* Styles for mobile screens (up to 767px) */
+      @media screen and (max-width: 767px) {
+        .frame {
+          flex-direction: column; /* Change to column for vertical alignment */
+          align-items: flex-start; /* Align items to the start */
+          padding: 20px; /* Adjust padding */
+        }
+
+        .frame .group {
+          width: 100%; /* Occupy full width */
+        }
+
+        .frame .noun-menu {
+          display: block; /* Show the noun-menu on mobile */
+          opacity: 100;
+        }
+
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame" style="z-index: 9999;opacity: 0.9;">
+      <div class="group">
+        <img class="noun-menu" src="images/icons-menu.svg" />
+        <div class="div"></div>
+        <div class="div-2">
+          <img class="search-tools" src="images/icons-search.svg" /> 
+          <img class="rectangle" src="img/profile.png" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

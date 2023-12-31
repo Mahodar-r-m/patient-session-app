@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+        /* .patient-search-container {
+        max-width: 100%;
+        padding: 10px;
+        } */
+
+        .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        }
+
+        /* Label style */
+        .label {
+            color: #999;
+            margin-right: 10px;
+            /* font-weight: bold; */
+        }
+
+        /* Button style */
+        .add-patient-btn {
+            font-size: small;
+        padding: 1px 10px;
+        /* background-color: #4CAF50; */
+        /* color: white; */
+        border: 1px solid #999;
+        cursor: pointer;
+        border-radius: 2rem;
+        }
+
+        .add-patient-btn:hover {
+        background-color: #45a049;
+        }
+
+        /* Input style */
+        .patient-search-input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        }
+
+        /* Dropdown list styles */
+        /* Example CSS for dropdown */
+        .dropdown {
+        position: relative;
+        display: inline-block;
+        }
+
+        .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        }
+
+        .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        }
+
+        .dropdown-content a:hover {
+        background-color: #f1f1f1;
+        }
+
+        /* Show dropdown on input focus */
+        .patient-search-input:focus + .dropdown-content {
+        display: block;
+        }
+
+/* ---------------------------------------------------------------- */
+        /* CSS for the dropdown */
+        #patient-dropdown {
+        display: none;
+        position: absolute;
+        z-index: 9999;
+        width: 100%;
+        background-color: #fff;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        }
+
+        #patient-dropdown.below-input {
+        top: calc(100% - 27px); /* Position below the input */
+        }
+
+        .patient-row {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #ccc;
+        width: 100%;
+        padding: 10px;
+        }
+        
+        .patient-row:hover{
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+
+        .col {
+        flex: 1;
+        }
+
+        .info-col {
+        display: flex;
+        flex-direction: column;
+        }
+
+        .name {
+        font-weight: bold;
+        font-size: 16px;
+        }
+
+        .number {
+        font-size: 12px;
+        }
+
+        .arrow-col {
+        text-align: right;
+        }
+
+        .no-match{
+            padding: 5px 15px;
+        }
+
+/* --------------------------------------------------------- */
+        /* CSS for the loader */
+        .loader {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+        }
+
+        @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+        }
+
+        /* Hide the loader by default */
+        #loader {
+        display: none;
+        }
+
+/* ----------------------------------------------------- */
+        /* CSS for the close button */
+        .close-button {
+        position: relative;
+        right: 5px;
+        bottom: 38px;
+        font-size: small;
+        border: 1px solid #999;
+        border-radius: 4px;
+        cursor: pointer;
+        border-radius: 2rem;
+        padding: 5px 10px;
+        cursor: pointer;
+        }
+
+        .close-button:hover {
+        background-color: #ccc;
+        }
+
+        .cancel-button{
+            width: 100%;
+            color: rgb(237, 161, 151);
+            border-color: rgb(237, 161, 151);
+        }
+
+        .cancel-button:hover{
+            background: linear-gradient(90deg,rgb(176, 164, 245) 0%,rgb(237, 161, 151) 100%);
+            border-color: rgb(237, 161, 151);
+        }
+
+        .add-button{
+            background: linear-gradient(90deg,rgb(176, 164, 245) 0%,rgb(237, 161, 151) 100%);
+            outline: none;
+            border: none;
+            width: 100%;
+            color: #fff;
+            padding: initial 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container patient-search-container">
+        <div class="col">
+            <div class="row">
+              <label for="select-patient" class="label">Select Patient</label>
+              <button class="add-patient-btn">+ Add Patient</button>
+            </div>
+            <div class="row">
+              <input type="text" id="select-patient" class="patient-search-input" placeholder="Select or enter patient name">
+              <!-- Close button -->
+              <div style="width: 100%;" align="right">
+                  <button class="close-button" id="closeDropdown" style="display: none;">Close</button>
+              </div>
+              <!-- Loader -->
+              <div class="loader" id="loader"></div>
+              <!-- The dropdown list for patient names will be populated here -->
+              <!-- <div class="col"> -->
+                  <div class="dropdown-content below-input" id="patient-dropdown"></div>
+              <!-- </div> -->
+            </div>
+        </div>
+
+        <!-- Add New Patient form -->
+        <div class="add-patient-form-container" style="display: none;">
+            <div class="add-patient-form" id="add-patient-form">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="mb-0 text-center">Add Patient</h5>
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="close close-btn" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label for="patient-name" class="col-sm-4 col-form-label text-muted">Patient Name *</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="patient-name" placeholder="Enter patient name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="primary-mobile" class="col-sm-4 col-form-label text-muted">Primary Mobile Number *</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="primary-mobile" placeholder="Enter mobile number">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="whatsapp-number" class="col-sm-4 col-form-label text-muted">Whatsapp Number *</label>
+                            <div class="col-sm-8">
+                                <div class="form-check mb-2">
+                                    <input type="checkbox" id="same-as-mobile" class="form-check-input" aria-label="Checkbox for whatsapp number">
+                                    <label class="form-check-label" for="same-as-mobile">Same as Mobile Number</label>
+                                </div>
+                                <input type="text" class="form-control" id="whatsapp-number" placeholder="Enter whatsapp number">
+                            </div>
+                        </div>                        
+                        <div class="form-group row">
+                            <label for="email-address" class="col-sm-4 col-form-label text-muted">Email Address *</label>
+                            <div class="col-sm-8">
+                                <input type="email" class="form-control" id="email-address" placeholder="Enter email address">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-6 text-right">
+                                <button type="button" class="btn btn-outline-secondary close-btn" style="width: 100%;">Cancel</button>
+                            </div>
+                            <div class="col-6 text-left">
+                                <button type="button" class="btn add-btn add-button" disabled>Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+          </div>
+          
+      </div> 
+      
+      <script src="/js/patient.js"></script>
+
+</html>
+  

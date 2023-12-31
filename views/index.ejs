@@ -1,11 +1,139 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        /* Custom styles */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.time {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.patient-name {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.previous-session {
+  font-size: 14px;
+  color: #888;
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #777;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .time {
+    font-size: 12px;
+  }
+
+  .patient-name {
+    font-size: 14px;
+  }
+
+  .previous-session {
+    font-size: 12px;
+  }
+}
+
+    </style>
+</head>
+<body>
+        
+    <!-- Import header of page -->
+    <%- include('./partials/header') %>
+
+    <!-- Content of page -->
+    <h6 class="p-2 d-flex align-items-center justify-content-between" style="margin-top: 7rem;">
+        <div>
+            <i class='far fa-clock'></i>
+            Schedule Sessions
+        </div>
+        <a href="/addsession" style="text-decoration: none;">
+            <button style="
+                font-size: small;
+                padding: 1px 10px;
+                border: 1px solid #999;
+                cursor: pointer;
+                border-radius: 2rem;
+                ">+ Add Session</button>
+        </a>
+    </h6>
+
+    <!-- <h6 class="mt-2 p-2">Recent Session</h6> -->
+    <!-- <div class="card p-2 m-2">
+        <div class="col">
+            <div class="row d-flex align-items-center">
+                <div class="col-4" style="font-size: small; font-weight: bold;">11:00 AM</div>
+                <div class="col-3" style="border-left: 1px solid #dbdbdb;">
+                    <img src="/images/profile.png" width="60" alt="Profile">
+                </div>
+                <div class="col-3">
+                    <div class="row" style="font-size: small; font-weight: bold;">Kiran Rathi</div>
+                    <div class="row" style="font-size: 11px;"><i class="fas fa-phone-alt"></i> 9876543210</div>
+                </div>
+                <div class="col-1"><i class="fa fa-chevron-down"></i></div>
+            </div>
+            <div class="row"></div>
+        </div>
+    </div> -->
+
+    <h6 class="mt-2 p-2">Next Few Sessions</h6>
+    <div class="container" style="padding-bottom: 5rem;">
+
+        <% data.forEach(function(session) { %>
+            <%
+            const timeParts = session.sessionTimeSlot.split(':');
+            const hours = parseInt(timeParts[0], 10);
+            const minutes = timeParts[1];
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const displayHours = hours % 12 === 0 ? 12 : hours % 12;
+            %>
+            <div class="card p-0">
+              <div class="card-body px-3 pt-2 pb-0">
+                <div class="row align-items-center">
+                  <div class="col-3 col-md-4 p-0 pl-2">
+                    <p class="time"><%= displayHours + ':' + minutes + ' ' + ampm %></p>
+                  </div>
+                  <div class="col-7 col-md-4 p-0">
+                    <p class="patient-name"><%= session.patientId.name %></p>
+                    <p class="previous-session">Session Date <br /> <%= session.sessionDate.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) %></p>
+                  </div>
+                  <div class="col-2 col-md-4 p-0">
+                    <button class="expand-btn">
+                      <i class="fa fa-chevron-down"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% }); %>  
+
+    </div>
+      
+
+
+    <!-- Import footer of page -->
+    <%- include('./partials/footer') %>
+
+    <script src="/js/index.js"></script>
+
+</body>
 </html>
