@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getAllSessions, addSession, editSession } = require('../controllers/SessionController');
+const { getAllSessions, addSession, editSession } = require('../controllers/sessionController');
 
 
 router.route('/')

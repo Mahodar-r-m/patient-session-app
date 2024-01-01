@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { addPsychiatrist, getAllPsychiatrists } = require('../controllers/PsychiatristController');
+const { addPsychiatrist, getAllPsychiatrists } = require('../controllers/psychiatristController');
 
 
 router.route('/')

@@ -13,10 +13,9 @@ const xss = require('xss-clean');
 const rateLimit = require('express-rate-limit');
 const hpp = require('hpp');
 
-// // Front-end packages
-// var $ = require('jquery');
-
-// const Swal = require('sweetalert2');
+// Front-end packages
+var $ = require('jquery');
+const Swal = require('sweetalert2');
 var bodyParser = require('body-parser');
 const expressLayouts = require('express-ejs-layouts');
 
@@ -31,13 +30,6 @@ const index = require('./routes/index');
 const patientRoutes = require('./routes/patientRoutes');
 const sessionRoutes = require('./routes/sessionRoutes');
 const psychiatristRoutes = require('./routes/psychiatristRoutes');
-
-// // Front-end routes
-// const admin = require('./routes/admin');
-// const manager = require('./routes/manager');
-// const teacher = require('./routes/teacher');
-
-// const branches = require('./routes/branches');
 
 const app = express();
 
@@ -56,12 +48,12 @@ app.use(mongoSanitize()); // To prevent sql injection
 
 // Set security headers
 app.use(helmet.contentSecurityPolicy({
-  directives: {
-    defaultSrc: ["'self'"],
-    scriptSrc: ["'self'", "https://code.jquery.com", "https://cdn.jsdelivr.net", "https://stackpath.bootstrapcdn.com"], // Content Security Policy (CSP) Error on AWS
-    styleSrc: ["'self'", "'unsafe-inline'", "https://stackpath.bootstrapcdn.com", "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com"], // Allow styles in AWS
-    fontSrc: ["'self'", "https://cdnjs.cloudflare.com", "https://fonts.gstatic.com"], // Add font sources here
-    connectSrc: ["'self'", "https://api.elasticemail.com"],
+directives: {
+defaultSrc: ["'self'"],
+scriptSrc: ["'self'", "https://code.jquery.com", "https://cdn.jsdelivr.net", "https://stackpath.bootstrapcdn.com"], // Content Security Policy (CSP) Error on AWS
+styleSrc: ["'self'", "'unsafe-inline'", "https://stackpath.bootstrapcdn.com", "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com"], // Allow styles in AWS
+fontSrc: ["'self'", "https://cdnjs.cloudflare.com", "https://fonts.gstatic.com"], // Add font sources here
+connectSrc: ["'self'", "https://api.elasticemail.com"],
 }
 }));
 
